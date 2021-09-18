@@ -1,4 +1,3 @@
-
 plugins {
     `kotlin-dsl`
 }
@@ -8,11 +7,16 @@ repositories {
     mavenCentral()
 }
 
+object PluginsVersions {
+    const val GRADLE_ANDROID = "4.2.0"
+    const val KOTLIN = "1.5.21"
+    const val GOOGLE_SERVICE = "4.3.10"
+}
+
 dependencies {
-    implementation("com.android.tools.build:gradle:4.2.0")
-    implementation("com.google.code.gson:gson:2.8.6")
-    implementation("com.google.gms:google-services:4.3.10")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21")
+    implementation("com.android.tools.build:gradle:${PluginsVersions.GRADLE_ANDROID}")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:${PluginsVersions.KOTLIN}")
+    implementation("com.google.gms:google-services:${PluginsVersions.GOOGLE_SERVICE}")
 
     implementation(gradleApi())
     implementation(localGroovy())

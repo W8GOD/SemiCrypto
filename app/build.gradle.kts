@@ -1,3 +1,5 @@
+import app.DependenciesVersions
+
 plugins {
     id("semicrypto.plugin.main")
     kotlin("android")
@@ -11,8 +13,8 @@ android {
 
     buildFeatures { compose = true }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.0.2"
-        kotlinCompilerVersion = "1.5.21"
+        kotlinCompilerExtensionVersion = DependenciesVersions.compose_version
+        kotlinCompilerVersion = DependenciesVersions.kotlin_version
     }
     kotlinOptions {
         jvmTarget = "1.8"
