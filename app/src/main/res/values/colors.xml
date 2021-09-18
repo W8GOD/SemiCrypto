@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="supernova">#FFFDC500</color>
+    <color name="gorse">#FFFFF84F</color>
+    <color name="gold">#FFC59500</color>
+    <color name="midnight_blue">#FF00296B</color>
+    <color name="chambray">#FF41519A</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>
