@@ -1,7 +1,4 @@
 buildscript {
-    ext {
-        compose_version = '1.0.2'
-    }
     repositories {
         google()
         mavenCentral()
@@ -15,6 +12,6 @@ allprojects {
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
 }
