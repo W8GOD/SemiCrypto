@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1087844072872",
+    "project_id": "semicrypto-6e475",
+    "storage_bucket": "semicrypto-6e475.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1087844072872:android:1d7b1c2ea28e6b64d7719d",
+        "android_client_info": {
+          "package_name": "com.discover.simple.semicrypto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1087844072872-msl9ul2qddcsos6mhbk9if8bnqd9ir05.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1v_RXbAuj-bz0uDDRKGVA7_rPafzRLpQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1087844072872-msl9ul2qddcsos6mhbk9if8bnqd9ir05.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
