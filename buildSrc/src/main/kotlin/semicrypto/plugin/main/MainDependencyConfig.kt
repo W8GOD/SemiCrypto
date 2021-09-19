@@ -15,14 +15,11 @@ internal fun Project.configureMainDependency() = dependencies {
     add("implementation", Dependencies.composePreview)
     add("implementation", Dependencies.lifecycleKtx)
     add("implementation", Dependencies.composeActivity)
-    add("implementation", Dependencies.glideCompiler)
-    add("implementation", Dependencies.glide)
     add("implementation", Dependencies.rxAndroid)
     add("implementation", Dependencies.rxKotlin)
     add("implementation", Dependencies.gson)
     add("implementation", Dependencies.pagingCompose)
-
-    add("kapt", Dependencies.glideCompiler)
+    add("implementation", Dependencies.coil)
 
     add("testImplementation", Dependencies.junit)
 

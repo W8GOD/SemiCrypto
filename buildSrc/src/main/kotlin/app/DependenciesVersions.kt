@@ -8,7 +8,6 @@ object DependenciesVersions {
     const val compose_version = "1.0.2"
     const val lifecycle_ktx_version = "2.3.1"
     const val compose_activity_version = "1.3.1"
-    const val glide_version = "4.11.0"
     const val junit_version = "4.12"
     const val junit_ext_version = "1.1.3"
     const val espresso_version = "3.4.0"
@@ -18,4 +17,7 @@ object DependenciesVersions {
     const val lifecycle_version = "2.2.0"
     const val paging_compose_version = "1.0.0-alpha12"
     const val retrofit_version = "2.9.0"
+    const val coil_version = "0.15.0"
+    const val okhttp_version = "4.9.1"
+    const val room_version = "2.3.0"
 }

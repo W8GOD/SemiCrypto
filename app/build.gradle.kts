@@ -24,3 +24,13 @@ android {
 androidExtensions {
     isExperimental = true
 }
+
+dependencies {
+    implementation(project(":core"))
+
+    //TODO Remove
+    implementation(app.Dependencies.retrofit)
+    implementation(app.Dependencies.retrofitConverter)
+    implementation(app.Dependencies.okhttp)
+    implementation(app.Dependencies.okhttpLogging)
+}

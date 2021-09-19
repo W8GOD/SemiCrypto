@@ -13,9 +13,9 @@ object Dependencies {
     // Gson
     const val gson = "com.google.code.gson:gson:${DependenciesVersions.gson_version}"
 
-    // Glide
-    const val glideCompiler = "com.github.bumptech.glide:compiler:${DependenciesVersions.glide_version}"
-    const val glide = "com.github.bumptech.glide:okhttp3-integration:${DependenciesVersions.glide_version}"
+    // OKHttp
+    const val okhttp = "com.squareup.okhttp3:okhttp:${DependenciesVersions.okhttp_version}"
+    const val okhttpLogging = "com.squareup.okhttp3:logging-interceptor:${DependenciesVersions.okhttp_version}"
 
     // Retrofit
     const val retrofit = "com.squareup.retrofit2:retrofit:${DependenciesVersions.retrofit_version}"
@@ -24,6 +24,14 @@ object Dependencies {
     // RX
     const val rxAndroid = "io.reactivex.rxjava2:rxandroid:${DependenciesVersions.rx_android_version}"
     const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${DependenciesVersions.rxkotlin_version}"
+
+    // Coil
+    const val coil = "com.google.accompanist:accompanist-coil:${DependenciesVersions.coil_version}"
+
+    // Room Database
+    const val room = "androidx.room:room-runtime:${DependenciesVersions.room_version}"
+    const val roomKtx = "androidx.room:room-ktx:${DependenciesVersions.room_version}"
+    const val roomCompiler = "androidx.room:room-compiler:${DependenciesVersions.room_version}"
 
     // Compose
     const val composeUI = "androidx.compose.ui:ui:${DependenciesVersions.compose_version}"

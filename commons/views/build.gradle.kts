@@ -1,5 +1,3 @@
-import app.Dependencies
-
 plugins {
     id("com.android.library")
     kotlin("android.extensions")
@@ -29,9 +27,5 @@ androidExtensions {
 }
 
 dependencies {
-    implementation(Dependencies.coreKtx)
-    implementation(Dependencies.lifecycleExtensions)
-    implementation(Dependencies.lifecycleViewModel)
+    implementation(project(":commons:ui"))
 }
-
-

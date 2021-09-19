@@ -11,3 +11,4 @@ val textColorLight = Color(0xDCFFFFFF)
 val textColorDark = Color(0xFFf3f3f3)
 
 val primaryBlack = Color.Black
+val primaryWhite = Color.White

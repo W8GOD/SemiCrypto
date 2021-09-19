@@ -12,16 +12,16 @@ private val DarkColorPalette = darkColors(
     surface = surfaceGrey,
     primaryVariant = primaryBlack,
     onPrimary = accentAmber,
-    onSurface = accentAmber
+    onSurface = accentAmber,
 )
 
 private val LightColorPalette = lightColors(
     primary = primarySupernova,
     secondary = textColorLight,
-    surface = surfaceGrey,
+    surface = primaryWhite,
     primaryVariant = primaryBlack,
     onPrimary = accentAmber,
-    onSurface = accentAmber
+    onSurface = accentAmber,
 )
 
 @Composable
