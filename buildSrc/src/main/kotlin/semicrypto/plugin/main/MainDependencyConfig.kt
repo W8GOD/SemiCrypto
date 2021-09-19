@@ -20,6 +20,7 @@ internal fun Project.configureMainDependency() = dependencies {
     add("implementation", Dependencies.rxAndroid)
     add("implementation", Dependencies.rxKotlin)
     add("implementation", Dependencies.gson)
+    add("implementation", Dependencies.pagingCompose)
 
     add("kapt", Dependencies.glideCompiler)
 

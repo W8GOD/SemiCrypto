@@ -15,4 +15,7 @@ object DependenciesVersions {
     const val rx_android_version = "2.1.1"
     const val rxkotlin_version = "2.4.0"
     const val gson_version = "2.8.6"
+    const val lifecycle_version = "2.2.0"
+    const val paging_compose_version = "1.0.0-alpha12"
+    const val retrofit_version = "2.9.0"
 }
