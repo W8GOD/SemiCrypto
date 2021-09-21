@@ -1,6 +1,8 @@
 package com.discover.simple.semicrypto
 
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -22,6 +24,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.text.HtmlCompat
 import androidx.paging.ExperimentalPagingApi
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.LocalImageLoader
@@ -92,21 +95,29 @@ fun EmployeeItem(empData: CoinsEntity.CoinEntity, onClick: () -> Unit) {
                     maxLines = 1,
                     modifier = Modifier.padding(end = 8.dp)
                 )
-                Text(
-                    text = "Bitcoin is the first decentralized digital currency that " +
-                            "can be sent through the internet globally without using " +
-                            "financial internet globally without using financial",
-                    fontWeight = FontWeight.Normal,
-                    style = TextStyle(fontSize = 14.sp),
-                    color = textColorDescription,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 3,
-                    modifier = Modifier.padding(top = 8.dp, end = 8.dp)
-                )
+                DescriptionText(empData.description)
             }
         }
         Divider(color = divider, thickness = 1.dp)
     }
+}
+
+@Composable
+private fun DescriptionText(html: String) {
+    val description = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        Html.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
+    } else {
+        Html.fromHtml(html).toString()
+    }
+    Text(
+        text = description,
+        fontWeight = FontWeight.Normal,
+        style = TextStyle(fontSize = 14.sp),
+        color = textColorDescription,
+        overflow = TextOverflow.Ellipsis,
+        maxLines = 3,
+        modifier = Modifier.padding(top = 8.dp, end = 8.dp)
+    )
 }
 
 @Preview(showBackground = true)

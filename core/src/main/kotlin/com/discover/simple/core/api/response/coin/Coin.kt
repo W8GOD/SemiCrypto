@@ -1,20 +1,16 @@
 package com.discover.simple.core.api.response.coin
 
 internal data class Coin(
-    val `24hVolume`: String,
-    val btcPrice: String,
-    val change: String,
-    val coinrankingUrl: String,
-    val color: String,
-    val iconUrl: String,
-    val listedAt: Int,
-    val lowVolume: Boolean,
-    val marketCap: String,
-    val name: String,
-    val price: String,
+    val color: String?,
+    val description: String?,
+    val iconType: String?,
+    val iconUrl: String?,
+    val id: Int,
+    val name: String?,
+    val price: String?,
     val rank: Int,
-    val sparkline: List<String>,
-    val symbol: String,
-    val tier: Int,
-    val uuid: String
+    val slug: String?,
+    val symbol: String?,
+    val type: String?,
+    val uuid: String?,
 )

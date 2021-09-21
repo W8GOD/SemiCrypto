@@ -8,6 +8,7 @@ import com.discover.simple.core.database.AppDatabase
 import com.discover.simple.core.entity.CoinsEntity
 import com.discover.simple.core.model.CoinMapper
 import com.discover.simple.core.repository.GetCoinListRepository
+import com.discover.simple.core.usecase.DEFAULT_LIMIT_PAGE
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import java.io.InvalidObjectException
@@ -62,7 +63,9 @@ class GetCoinsRxRemoteMediator : RxRemoteMediator<Int, CoinsEntity.CoinEntity>()
                 }
 
             }
-            .onErrorReturn { MediatorResult.Error(it) }
+            .onErrorReturn {
+                MediatorResult.Error(it)
+            }
     }
 
     private fun insertToDb(offset: Int, loadType: LoadType, data: CoinsEntity): CoinsEntity {

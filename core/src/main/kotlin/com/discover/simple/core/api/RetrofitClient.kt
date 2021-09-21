@@ -15,7 +15,7 @@ internal object RetrofitClient {
 
     private fun createRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://api.coinranking.com/v2/")
+            .baseUrl("https://api.coinranking.com/v1/public/")
             .client(getOkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
