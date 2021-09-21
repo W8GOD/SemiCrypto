@@ -5,30 +5,36 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.material.MaterialTheme.typography
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Surface
+import androidx.compose.material.TabRowDefaults.Divider
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.paging.ExperimentalPagingApi
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.LocalImageLoader
 import coil.compose.rememberImagePainter
+import coil.decode.SvgDecoder
+import com.discover.simple.core.entity.CoinsEntity
 import com.discover.simple.semicrypto.ui.theme.SemiCryptoTheme
+import com.discover.simple.semicrypto.ui.theme.divider
+import com.discover.simple.semicrypto.ui.theme.textColorDescription
+import com.discover.simple.semicrypto.ui.theme.textColorTitle
 
+@ExperimentalPagingApi
+@ExperimentalCoilApi
 class MainActivity : ComponentActivity() {
     private val employeeViewModel: EmployeeViewModel by viewModels()
 
@@ -44,68 +50,62 @@ class MainActivity : ComponentActivity() {
 
 @ExperimentalCoilApi
 @Composable
-fun EmployeeItem(empData: User, onClick: () -> Unit) {
-    Card(
+fun EmployeeItem(empData: CoinsEntity.CoinEntity, onClick: () -> Unit) {
+    Column(
         modifier = Modifier
-            .padding(bottom = 5.dp, top = 5.dp, start = 5.dp, end = 5.dp)
             .fillMaxWidth()
             .clickable(onClick = onClick),
-        shape = RoundedCornerShape(15.dp),
-        elevation = 12.dp
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Row(
-            modifier = Modifier
-                .clip(RoundedCornerShape(4.dp))
-                .background(MaterialTheme.colors.surface)
-        ) {
+        Row {
             Surface(
-                modifier = Modifier.size(130.dp),
-                shape = RoundedCornerShape(12.dp),
-                color = MaterialTheme.colors.surface.copy(
-                    alpha = 0.2f
-                )
+                modifier = Modifier
+                    .size(100.dp)
+                    .padding(16.dp),
+                shape = CircleShape
             ) {
                 val image = rememberImagePainter(
-                    data = empData.avatar,
+                    data = empData.iconUrl,
                     imageLoader = LocalImageLoader.current,
                     builder = {
-                        this.crossfade(true)
+                        crossfade(true)
                         placeholder(0)
+                        decoder(SvgDecoder(LocalContext.current))
                     }
                 )
                 Image(
                     painter = image,
                     contentDescription = null,
-                    modifier = Modifier
-                        .height(100.dp)
-                        .clip(shape = RoundedCornerShape(12.dp)),
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.FillBounds,
                 )
             }
             Column(
                 modifier = Modifier
-                    .padding(start = 12.dp)
                     .align(Alignment.CenterVertically)
             ) {
                 Text(
-                    text = empData.first_name,
+                    text = empData.name,
                     fontWeight = FontWeight.Bold,
-                    style = TextStyle(fontSize = 22.sp),
-                    color = Color.Black
+                    style = TextStyle(fontSize = 16.sp),
+                    color = textColorTitle,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
+                    modifier = Modifier.padding(end = 8.dp)
                 )
-                CompositionLocalProvider(
-                    LocalContentAlpha provides ContentAlpha.medium
-                ) {
-                    Text(
-                        text = empData.email,
-                        style = typography.body2,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.padding(end = 25.dp)
-                    )
-                }
+                Text(
+                    text = "Bitcoin is the first decentralized digital currency that " +
+                            "can be sent through the internet globally without using " +
+                            "financial internet globally without using financial",
+                    fontWeight = FontWeight.Normal,
+                    style = TextStyle(fontSize = 14.sp),
+                    color = textColorDescription,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 3,
+                    modifier = Modifier.padding(top = 8.dp, end = 8.dp)
+                )
             }
         }
+        Divider(color = divider, thickness = 1.dp)
     }
 }
 

@@ -54,8 +54,11 @@ dependencies {
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.retrofit)
     implementation(Dependencies.retrofitConverter)
+    implementation(Dependencies.retrofitAdapter)
     implementation(Dependencies.okhttp)
     implementation(Dependencies.okhttpLogging)
+    implementation(Dependencies.rxJavaPaging)
+    implementation(Dependencies.pagingRuntime)
 
     kapt(Dependencies.roomCompiler)
 }

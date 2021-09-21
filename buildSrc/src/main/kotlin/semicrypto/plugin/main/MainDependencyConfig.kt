@@ -20,6 +20,8 @@ internal fun Project.configureMainDependency() = dependencies {
     add("implementation", Dependencies.gson)
     add("implementation", Dependencies.pagingCompose)
     add("implementation", Dependencies.coil)
+    add("implementation", Dependencies.coilCompose)
+    add("implementation", Dependencies.coilSvg)
 
     add("testImplementation", Dependencies.junit)
 

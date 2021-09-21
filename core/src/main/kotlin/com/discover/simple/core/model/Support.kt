@@ -1,4 +1,4 @@
-package com.discover.simple.semicrypto
+package com.discover.simple.core.model
 
 data class Support(
     var url: String,

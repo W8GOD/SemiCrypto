@@ -13,11 +13,13 @@ object DependenciesVersions {
     const val espresso_version = "3.4.0"
     const val rx_android_version = "2.1.1"
     const val rxkotlin_version = "2.4.0"
+    const val paging_version = "3.0.1"
     const val gson_version = "2.8.6"
     const val lifecycle_version = "2.2.0"
     const val paging_compose_version = "1.0.0-alpha12"
     const val retrofit_version = "2.9.0"
     const val coil_version = "0.15.0"
+    const val coil_compose_version = "1.3.2"
     const val okhttp_version = "4.9.1"
     const val room_version = "2.3.0"
 }

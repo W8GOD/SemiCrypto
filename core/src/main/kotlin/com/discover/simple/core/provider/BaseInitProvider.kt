@@ -5,7 +5,7 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
 
-abstract class BaseInitProvider : ContentProvider() {
+internal abstract class BaseInitProvider : ContentProvider() {
     override fun onCreate(): Boolean {
         return false
     }

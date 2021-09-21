@@ -1,25 +1,26 @@
-package com.discover.simple.semicrypto
+package com.discover.simple.core.api
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitClient {
+internal object RetrofitClient {
+    internal val apiService: RetrofitService = getClient().create(RetrofitService::class.java)
+
     private fun getClient(): Retrofit {
-        return createRetrofit("https://reqres.in/api/")
+        return createRetrofit()
     }
 
-    private fun createRetrofit(url: String): Retrofit {
+    private fun createRetrofit(): Retrofit {
         return Retrofit.Builder()
-//            .baseUrl("https://reqres.in/api/")
-            .baseUrl(url)
+            .baseUrl("https://api.coinranking.com/v2/")
             .client(getOkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }
-
-    val apiService: RetrofitService = getClient().create(RetrofitService::class.java)
 
     private fun getLoggingIntercepter() =
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC)

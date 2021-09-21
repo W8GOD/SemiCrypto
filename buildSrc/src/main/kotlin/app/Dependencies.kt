@@ -20,13 +20,18 @@ object Dependencies {
     // Retrofit
     const val retrofit = "com.squareup.retrofit2:retrofit:${DependenciesVersions.retrofit_version}"
     const val retrofitConverter = "com.squareup.retrofit2:converter-gson:${DependenciesVersions.retrofit_version}"
+    const val retrofitAdapter = "com.squareup.retrofit2:adapter-rxjava2:${DependenciesVersions.retrofit_version}"
 
     // RX
     const val rxAndroid = "io.reactivex.rxjava2:rxandroid:${DependenciesVersions.rx_android_version}"
     const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${DependenciesVersions.rxkotlin_version}"
+    const val rxJavaPaging = "androidx.paging:paging-rxjava2:${DependenciesVersions.paging_version}"
+    const val pagingRuntime = "androidx.paging:paging-runtime:${DependenciesVersions.paging_version}"
 
     // Coil
     const val coil = "com.google.accompanist:accompanist-coil:${DependenciesVersions.coil_version}"
+    const val coilCompose = "io.coil-kt:coil-compose:${DependenciesVersions.coil_compose_version}"
+    const val coilSvg = "io.coil-kt:coil-svg:${DependenciesVersions.coil_compose_version}"
 
     // Room Database
     const val room = "androidx.room:room-runtime:${DependenciesVersions.room_version}"
