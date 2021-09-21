@@ -8,6 +8,6 @@ import com.discover.simple.core.usecase.GetCoinsUserCase
 import kotlinx.coroutines.flow.Flow
 
 @ExperimentalPagingApi
-class EmployeeViewModel : ViewModel() {
+class CoinViewModel : ViewModel() {
     val coins: Flow<PagingData<CoinsEntity.CoinEntity>> = GetCoinsUserCase().execute()
 }

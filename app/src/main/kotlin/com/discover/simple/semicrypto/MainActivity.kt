@@ -39,13 +39,13 @@ import com.discover.simple.semicrypto.ui.theme.textColorTitle
 @ExperimentalPagingApi
 @ExperimentalCoilApi
 class MainActivity : ComponentActivity() {
-    private val employeeViewModel: EmployeeViewModel by viewModels()
+    private val coinViewModel: CoinViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             SemiCryptoTheme {
-                UserList(viewModel = employeeViewModel, context = this)
+                CoinList(viewModel = coinViewModel, context = this)
             }
         }
     }
@@ -53,7 +53,7 @@ class MainActivity : ComponentActivity() {
 
 @ExperimentalCoilApi
 @Composable
-fun EmployeeItem(empData: CoinsEntity.CoinEntity, onClick: () -> Unit) {
+fun CoinWithContentItem(coinData: CoinsEntity.CoinEntity, onClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -68,7 +68,7 @@ fun EmployeeItem(empData: CoinsEntity.CoinEntity, onClick: () -> Unit) {
                 shape = CircleShape
             ) {
                 val image = rememberImagePainter(
-                    data = empData.iconUrl,
+                    data = coinData.iconUrl,
                     imageLoader = LocalImageLoader.current,
                     builder = {
                         crossfade(true)
@@ -87,7 +87,7 @@ fun EmployeeItem(empData: CoinsEntity.CoinEntity, onClick: () -> Unit) {
                     .align(Alignment.CenterVertically)
             ) {
                 Text(
-                    text = empData.name,
+                    text = coinData.name,
                     fontWeight = FontWeight.Bold,
                     style = TextStyle(fontSize = 16.sp),
                     color = textColorTitle,
@@ -95,7 +95,55 @@ fun EmployeeItem(empData: CoinsEntity.CoinEntity, onClick: () -> Unit) {
                     maxLines = 1,
                     modifier = Modifier.padding(end = 8.dp)
                 )
-                DescriptionText(empData.description)
+                DescriptionText(coinData.description)
+            }
+        }
+        Divider(color = divider, thickness = 1.dp)
+    }
+}
+
+@ExperimentalCoilApi
+@Composable
+fun CoinItem(coinData: CoinsEntity.CoinEntity, onClick: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.End
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = coinData.name,
+                fontWeight = FontWeight.Bold,
+                style = TextStyle(fontSize = 16.sp),
+                color = textColorTitle,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+                modifier = Modifier.padding(end = 8.dp)
+            )
+            Surface(
+                modifier = Modifier
+                    .size(100.dp)
+                    .padding(16.dp),
+                shape = CircleShape
+            ) {
+                val image = rememberImagePainter(
+                    data = coinData.iconUrl,
+                    imageLoader = LocalImageLoader.current,
+                    builder = {
+                        crossfade(true)
+                        placeholder(0)
+                        decoder(SvgDecoder(LocalContext.current))
+                    }
+                )
+                Image(
+                    painter = image,
+                    contentDescription = null,
+                    contentScale = ContentScale.FillBounds,
+                )
             }
         }
         Divider(color = divider, thickness = 1.dp)

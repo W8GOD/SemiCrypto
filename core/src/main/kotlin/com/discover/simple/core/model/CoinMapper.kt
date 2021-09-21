@@ -11,7 +11,8 @@ internal class CoinMapper {
                 total = response.data?.stats?.total ?: 0,
                 coins = response.data?.coins?.map { coinItem ->
                     CoinsEntity.CoinEntity(
-                        id = coinItem.uuid ?: "",
+                        id = coinItem.id,
+                        uuid = coinItem.uuid ?: "",
                         description = coinItem.description ?: "",
                         name = coinItem.name ?: "",
                         iconUrl = coinItem.iconUrl ?: "",

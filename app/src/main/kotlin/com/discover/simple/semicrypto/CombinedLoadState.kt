@@ -9,7 +9,7 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
+import androidx.paging.compose.itemsIndexed
 import coil.annotation.ExperimentalCoilApi
 import com.discover.simple.core.entity.CoinsEntity
 import kotlinx.coroutines.flow.Flow
@@ -17,24 +17,32 @@ import kotlinx.coroutines.flow.Flow
 @ExperimentalPagingApi
 @ExperimentalCoilApi
 @Composable
-fun UserList(viewModel: EmployeeViewModel, context: Context) {
-    UserInfoList(userList = viewModel.coins, context)
+fun CoinList(viewModel: CoinViewModel, context: Context) {
+    CoinInfoList(coins = viewModel.coins, context)
 }
 
 @ExperimentalCoilApi
 @Composable
-fun UserInfoList(userList: Flow<PagingData<CoinsEntity.CoinEntity>>, context: Context) {
-    val userListItems: LazyPagingItems<CoinsEntity.CoinEntity> = userList.collectAsLazyPagingItems()
+fun CoinInfoList(coins: Flow<PagingData<CoinsEntity.CoinEntity>>, context: Context) {
+    val coinItems: LazyPagingItems<CoinsEntity.CoinEntity> = coins.collectAsLazyPagingItems()
 
     LazyColumn {
-        items(items = userListItems) { item ->
-            item?.let {
-                EmployeeItem(empData = it, onClick = {
-                    Toast.makeText(context, it.id.toString(), Toast.LENGTH_SHORT).show()
-                })
+        itemsIndexed(coinItems) { index, item ->
+            if (((index + 1) % 5) == 0) {
+                item?.let {
+                    CoinItem(coinData = it, onClick = {
+                        Toast.makeText(context, it.id.toString(), Toast.LENGTH_SHORT).show()
+                    })
+                }
+            } else {
+                item?.let {
+                    CoinWithContentItem(coinData = it, onClick = {
+                        Toast.makeText(context, it.id.toString(), Toast.LENGTH_SHORT).show()
+                    })
+                }
             }
         }
-        userListItems.apply {
+        coinItems.apply {
             when {
                 loadState.refresh is LoadState.Loading -> {
                     //You can add modifier to manage load state when first time response page is loading
