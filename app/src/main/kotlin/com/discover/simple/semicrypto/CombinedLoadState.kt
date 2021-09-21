@@ -25,7 +25,6 @@ fun CoinList(viewModel: CoinViewModel, context: Context) {
 @Composable
 fun CoinInfoList(coins: Flow<PagingData<CoinsEntity.CoinEntity>>, context: Context) {
     val coinItems: LazyPagingItems<CoinsEntity.CoinEntity> = coins.collectAsLazyPagingItems()
-
     LazyColumn {
         itemsIndexed(coinItems) { index, item ->
             if (((index + 1) % 5) == 0) {

@@ -13,6 +13,7 @@ val textColorDark = Color(0xFFf3f3f3)
 val primaryBlack = Color.Black
 val primaryWhite = Color.White
 
-val divider = Color(0xFFEEEEEE)
+val brightGray = Color(0xFFEEEEEE)
+val spanishGray = Color(0xFF9E9E9E)
 val textColorTitle = Color(0xFF000000)
 val textColorDescription = Color(0xFF9E9E9E)

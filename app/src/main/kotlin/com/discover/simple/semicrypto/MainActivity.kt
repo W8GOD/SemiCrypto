@@ -10,16 +10,24 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Surface
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.material.TabRowDefaults.Divider
-import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,10 +39,7 @@ import coil.compose.LocalImageLoader
 import coil.compose.rememberImagePainter
 import coil.decode.SvgDecoder
 import com.discover.simple.core.entity.CoinsEntity
-import com.discover.simple.semicrypto.ui.theme.SemiCryptoTheme
-import com.discover.simple.semicrypto.ui.theme.divider
-import com.discover.simple.semicrypto.ui.theme.textColorDescription
-import com.discover.simple.semicrypto.ui.theme.textColorTitle
+import com.discover.simple.semicrypto.ui.theme.*
 
 @ExperimentalPagingApi
 @ExperimentalCoilApi
@@ -45,10 +50,54 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SemiCryptoTheme {
-                CoinList(viewModel = coinViewModel, context = this)
+                Column {
+                    val textState = remember { mutableStateOf(TextFieldValue("")) }
+                    SearchView(textState)
+                    CoinList(viewModel = coinViewModel, context = this@MainActivity)
+                }
             }
         }
     }
+}
+
+@Composable
+fun SearchView(state: MutableState<TextFieldValue>) {
+    TextField(
+        value = state.value,
+        onValueChange = { value ->
+            state.value = value
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 20.dp, bottom = 20.dp, start = 16.dp, end = 16.dp),
+        textStyle = TextStyle(color = spanishGray, fontSize = 14.sp),
+        leadingIcon = {
+            Icon(
+                Icons.Default.Search,
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(15.dp)
+                    .size(18.dp)
+            )
+        },
+        singleLine = true,
+        shape = RoundedCornerShape(8.dp),
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = spanishGray,
+            cursorColor = spanishGray,
+            backgroundColor = brightGray,
+            leadingIconColor = spanishGray,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent
+        ),
+        placeholder = {
+            Text(
+                stringResource(id = R.string.search),
+                style = TextStyle(color = spanishGray, fontSize = 14.sp)
+            )
+        }
+    )
 }
 
 @ExperimentalCoilApi
@@ -98,7 +147,7 @@ fun CoinWithContentItem(coinData: CoinsEntity.CoinEntity, onClick: () -> Unit) {
                 DescriptionText(coinData.description)
             }
         }
-        Divider(color = divider, thickness = 1.dp)
+        Divider(color = brightGray, thickness = 1.dp)
     }
 }
 
@@ -146,7 +195,7 @@ fun CoinItem(coinData: CoinsEntity.CoinEntity, onClick: () -> Unit) {
                 )
             }
         }
-        Divider(color = divider, thickness = 1.dp)
+        Divider(color = brightGray, thickness = 1.dp)
     }
 }
 
@@ -172,6 +221,7 @@ private fun DescriptionText(html: String) {
 @Composable
 fun DefaultPreview() {
     SemiCryptoTheme {
-
+        val textState = remember { mutableStateOf(TextFieldValue("")) }
+        SearchView(textState)
     }
 }

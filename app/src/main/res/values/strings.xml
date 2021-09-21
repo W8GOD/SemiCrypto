@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SemiCrypto</string>
+    <string name="search">ค้นหา</string>
 </resources>
