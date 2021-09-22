@@ -4,6 +4,8 @@ import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.paging.PagingData
@@ -17,8 +19,13 @@ import kotlinx.coroutines.flow.Flow
 @ExperimentalPagingApi
 @ExperimentalCoilApi
 @Composable
-fun CoinList(viewModel: CoinViewModel, context: Context) {
-    CoinInfoList(coins = viewModel.coins, context)
+fun CoinList(context: Context, viewModel: CoinViewModel, state: MutableState<TextFieldValue>) {
+    val searchedText = state.value.text
+    if (searchedText.isEmpty()) {
+        CoinInfoList(coins = viewModel.coins, context)
+    } else {
+
+    }
 }
 
 @ExperimentalCoilApi

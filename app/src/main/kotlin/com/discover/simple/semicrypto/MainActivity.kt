@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.TabRowDefaults.Divider
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -29,7 +30,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.text.HtmlCompat
@@ -53,7 +53,12 @@ class MainActivity : ComponentActivity() {
                 Column {
                     val textState = remember { mutableStateOf(TextFieldValue("")) }
                     SearchView(textState)
-                    CoinList(viewModel = coinViewModel, context = this@MainActivity)
+                    Divider(color = brightGray, thickness = 1.dp)
+                    CoinList(
+                        context = this@MainActivity,
+                        viewModel = coinViewModel,
+                        state = textState
+                    )
                 }
             }
         }
@@ -80,6 +85,23 @@ fun SearchView(state: MutableState<TextFieldValue>) {
                     .size(18.dp)
             )
         },
+        trailingIcon = {
+            if (state.value != TextFieldValue("")) {
+                IconButton(
+                    onClick = {
+                        state.value = TextFieldValue("")
+                    }
+                ) {
+                    Icon(
+                        Icons.Default.Close,
+                        contentDescription = "",
+                        modifier = Modifier
+                            .padding(15.dp)
+                            .size(24.dp)
+                    )
+                }
+            }
+        },
         singleLine = true,
         shape = RoundedCornerShape(8.dp),
         colors = TextFieldDefaults.textFieldColors(
@@ -87,6 +109,7 @@ fun SearchView(state: MutableState<TextFieldValue>) {
             cursorColor = spanishGray,
             backgroundColor = brightGray,
             leadingIconColor = spanishGray,
+            trailingIconColor = spanishGray,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent
@@ -215,13 +238,4 @@ private fun DescriptionText(html: String) {
         maxLines = 3,
         modifier = Modifier.padding(top = 8.dp, end = 8.dp)
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    SemiCryptoTheme {
-        val textState = remember { mutableStateOf(TextFieldValue("")) }
-        SearchView(textState)
-    }
 }

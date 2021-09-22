@@ -29,8 +29,7 @@ class GetCoinsRxRemoteMediator : RxRemoteMediator<Int, CoinsEntity.CoinEntity>()
                 when (it) {
                     LoadType.REFRESH -> {
                         val keys = getKeyClosestToCurrentPosition(state)
-                        keys?.nextKey?.minus(DEFAULT_LIMIT_PAGE)
-                            ?.coerceAtLeast(0) ?: 0
+                        keys?.nextKey?.minus(DEFAULT_LIMIT_PAGE)?.coerceAtLeast(0) ?: 0
                     }
                     LoadType.PREPEND -> {
                         val keys = getKeyForFirstItem()
@@ -57,9 +56,7 @@ class GetCoinsRxRemoteMediator : RxRemoteMediator<Int, CoinsEntity.CoinEntity>()
                         .map<MediatorResult> {
                             MediatorResult.Success(endOfPaginationReached = offset > it.total)
                         }
-                        .onErrorReturn {
-                            MediatorResult.Error(it)
-                        }
+                        .onErrorReturn { MediatorResult.Error(it) }
                 }
 
             }
