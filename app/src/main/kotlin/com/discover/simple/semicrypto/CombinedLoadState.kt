@@ -1,7 +1,5 @@
 package com.discover.simple.semicrypto
 
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -24,53 +22,65 @@ import kotlin.time.ExperimentalTime
 @ExperimentalCoilApi
 @Composable
 fun CoinList(
-    context: Context,
     viewModel: CoinViewModel,
-    state: MutableState<TextFieldValue>, onLoaded: (Boolean) -> Unit
+    state: MutableState<TextFieldValue>,
+    onLoadCompleted: (Boolean) -> Unit,
+    onLoadFailed: (String?) -> Unit,
+    onItemClicked: (Coin) -> Unit
 ) {
     val searchedText = state.value.text
     if (searchedText.isEmpty()) {
-        CoinInfoList(coins = viewModel.getCoins(), context, onLoaded)
+        CoinInfoList(coins = viewModel.getCoins(), onLoadCompleted, onLoadFailed, onItemClicked)
     } else {
-        CoinInfoList(coins = viewModel.searchCoins(searchedText), context, onLoaded)
+        CoinInfoList(
+            coins = viewModel.searchCoins(searchedText),
+            onLoadCompleted,
+            onLoadFailed,
+            onItemClicked
+        )
     }
 }
 
 @ExperimentalCoilApi
 @Composable
-fun CoinInfoList(coins: Flow<PagingData<Coin>>, context: Context, onLoaded: (Boolean) -> Unit) {
+fun CoinInfoList(
+    coins: Flow<PagingData<Coin>>,
+    onLoadCompleted: (Boolean) -> Unit,
+    onLoadFailed: (String?) -> Unit,
+    onItemClicked: (Coin) -> Unit
+) {
     val coinItems: LazyPagingItems<Coin> = coins.collectAsLazyPagingItems()
     LazyColumn {
         itemsIndexed(coinItems) { index, item ->
             if (((index + 1) % 5) == 0) {
                 item?.let {
                     CoinItem(coinData = it, onClick = {
-                        Toast.makeText(context, it.id.toString(), Toast.LENGTH_SHORT).show()
+                        onItemClicked.invoke(it)
                     })
                 }
             } else {
                 item?.let {
                     CoinWithContentItem(coin = it, onClick = {
-                        Toast.makeText(context, it.id.toString(), Toast.LENGTH_SHORT).show()
+                        onItemClicked.invoke(it)
                     })
                 }
             }
         }
         coinItems.apply {
             when {
-                loadState.refresh is LoadState.Loading -> {
-                    onLoaded.invoke(false)
+                loadState.refresh is LoadState.NotLoading -> {
+                    onLoadCompleted(true)
                 }
                 loadState.refresh is LoadState.Error -> {
                     val message = (loadState.refresh as? LoadState.Error)?.error?.message
-                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                    onLoadFailed.invoke(message)
                 }
                 loadState.append is LoadState.Loading -> {
-                    onLoaded.invoke(false)
+                    onLoadCompleted(true)
                 }
                 loadState.append is LoadState.Error -> {
                     val message = (loadState.append as? LoadState.Error)?.error?.message
-                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                    onLoadFailed.invoke(message)
                 }
             }
         }

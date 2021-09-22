@@ -3,6 +3,7 @@ package com.discover.simple.semicrypto
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -40,6 +41,7 @@ import com.discover.simple.semicrypto.ui.theme.*
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.delay
 import kotlin.time.ExperimentalTime
 
 @FlowPreview
@@ -55,7 +57,13 @@ class MainActivity : ComponentActivity() {
             SemiCryptoTheme {
                 Column {
                     val textState = remember { mutableStateOf(TextFieldValue("")) }
-                    var refreshing by remember { mutableStateOf(false) }
+                    var refreshing by remember { mutableStateOf(true) }
+                    LaunchedEffect(refreshing) {
+                        if (refreshing) {
+                            delay(2000)
+                            refreshing = false
+                        }
+                    }
                     SearchView(textState)
                     Divider(color = brightGray, thickness = 1.dp)
                     SwipeRefresh(
@@ -65,11 +73,22 @@ class MainActivity : ComponentActivity() {
                         },
                     ) {
                         CoinList(
-                            context = this@MainActivity,
                             viewModel = coinViewModel,
                             state = textState,
-                            onLoaded = {
-                                refreshing = false
+                            onLoadCompleted = {
+                                // TODO Handle when load data is completed
+                            },
+                            onLoadFailed = {
+                                Toast.makeText(
+                                    this@MainActivity, it,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            },
+                            onItemClicked = {
+                                Toast.makeText(
+                                    this@MainActivity, it.name,
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         )
                     }
