@@ -3,7 +3,6 @@ package com.discover.simple.semicrypto
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
-import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -38,6 +37,7 @@ import coil.compose.ImagePainter
 import coil.compose.LocalImageLoader
 import coil.compose.rememberImagePainter
 import coil.decode.SvgDecoder
+import com.discover.simple.common.FileUtil
 import com.discover.simple.core.model.Coin
 import com.discover.simple.semicrypto.ui.theme.*
 import kotlinx.coroutines.FlowPreview
@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
                         viewModel = coinViewModel,
                         state = textState,
                         onLoadCompleted = {
-                            // TODO Handle when load data is completed
+
                         },
                         onLoadFailed = {
                             Toast.makeText(
@@ -242,7 +242,7 @@ private fun DescriptionText(html: String) {
 @ExperimentalCoilApi
 @Composable
 fun getImagePainter(imageUrl: String): ImagePainter {
-    return if (getExtension(imageUrl).lowercase() == "svg") {
+    return if (FileUtil.getExtension(imageUrl).lowercase() == "svg") {
         rememberImagePainter(
             data = imageUrl,
             imageLoader = LocalImageLoader.current,
@@ -260,9 +260,4 @@ fun getImagePainter(imageUrl: String): ImagePainter {
             error(R.drawable.ic_placeholder)
         })
     }
-}
-
-fun getExtension(url: String): String {
-    val extension = MimeTypeMap.getFileExtensionFromUrl(url)
-    return if (extension.isEmpty()) "" else extension
 }
