@@ -240,7 +240,7 @@ fun CoinItem(coinData: Coin, onClick: () -> Unit) {
                     imageLoader = LocalImageLoader.current,
                     builder = {
                         crossfade(true)
-                        placeholder(0)
+                        placeholder(R.mipmap.ic_coin_placeholder)
                         decoder(SvgDecoder(LocalContext.current))
                     }
                 )
