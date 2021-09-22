@@ -4,22 +4,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.discover.simple.core.dao.ApiKeyDao
 import com.discover.simple.core.dao.CoinDao
 import com.discover.simple.core.dao.CoinKeysDao
-import com.discover.simple.core.entity.ApiKeyEntity
 import com.discover.simple.core.entity.CoinsEntity
 
 @Database(
-    entities = [ApiKeyEntity::class,
-        CoinsEntity.CoinEntity::class,
+    entities = [CoinsEntity.CoinEntity::class,
         CoinsEntity.CoinKeys::class],
     version = 1,
     exportSchema = false
 )
 internal abstract class AppDatabase : RoomDatabase() {
-
-    abstract fun apiKeyDao(): ApiKeyDao
 
     abstract fun coinKeysDao(): CoinKeysDao
 

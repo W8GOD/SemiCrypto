@@ -15,6 +15,8 @@ data class CoinsEntity(val total: Int = 0, val coins: List<CoinEntity>) : Parcel
         val uuid: String,
         val name: String,
         val description: String,
+        val slug: String,
+        val symbol: String,
         val iconUrl: String,
         val rank: Int?
     ) : Parcelable

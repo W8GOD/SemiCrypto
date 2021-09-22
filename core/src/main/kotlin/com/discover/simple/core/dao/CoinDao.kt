@@ -15,6 +15,9 @@ internal interface CoinDao {
     @Query("SELECT * FROM coins ORDER BY rank ASC")
     fun getAll(): PagingSource<Int, CoinsEntity.CoinEntity>
 
+    @Query("SELECT * FROM coins WHERE id = :keyword OR name like '%' || :keyword || '%' OR slug = :keyword OR symbol = :keyword ORDER BY rank ASC")
+    fun search(keyword: String): PagingSource<Int, CoinsEntity.CoinEntity>
+
     @Query("DELETE FROM coins")
     fun clearCoins()
 }

@@ -14,6 +14,8 @@ internal class CoinMapper {
                         id = coinItem.id,
                         uuid = coinItem.uuid ?: "",
                         description = coinItem.description ?: "",
+                        slug = coinItem.slug ?: "",
+                        symbol = coinItem.symbol ?: "",
                         name = coinItem.name ?: "",
                         iconUrl = coinItem.iconUrl ?: "",
                         rank = coinItem.rank

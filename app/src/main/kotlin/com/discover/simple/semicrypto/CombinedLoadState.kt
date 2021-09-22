@@ -15,16 +15,18 @@ import androidx.paging.compose.itemsIndexed
 import coil.annotation.ExperimentalCoilApi
 import com.discover.simple.core.entity.CoinsEntity
 import kotlinx.coroutines.flow.Flow
+import kotlin.time.ExperimentalTime
 
+@ExperimentalTime
 @ExperimentalPagingApi
 @ExperimentalCoilApi
 @Composable
 fun CoinList(context: Context, viewModel: CoinViewModel, state: MutableState<TextFieldValue>) {
     val searchedText = state.value.text
     if (searchedText.isEmpty()) {
-        CoinInfoList(coins = viewModel.coins, context)
+        CoinInfoList(coins = viewModel.getCoins, context)
     } else {
-
+        CoinInfoList(coins = viewModel.searchCoins(searchedText), context)
     }
 }
 

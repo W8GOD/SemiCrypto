@@ -40,9 +40,11 @@ import coil.compose.rememberImagePainter
 import coil.decode.SvgDecoder
 import com.discover.simple.core.entity.CoinsEntity
 import com.discover.simple.semicrypto.ui.theme.*
+import kotlin.time.ExperimentalTime
 
 @ExperimentalPagingApi
 @ExperimentalCoilApi
+@ExperimentalTime
 class MainActivity : ComponentActivity() {
     private val coinViewModel: CoinViewModel by viewModels()
 

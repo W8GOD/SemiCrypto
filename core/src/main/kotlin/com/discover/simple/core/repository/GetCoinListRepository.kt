@@ -9,4 +9,19 @@ class GetCoinListRepository {
     internal fun getCoinList(offset: Int, limit: Int): Single<CoinListResponse> {
         return RetrofitClient.apiService.getCoinList(offset = offset, limit = limit)
     }
+
+    internal fun searchCoinList(
+        keyword: String,
+        offset: Int,
+        limit: Int
+    ): Single<CoinListResponse> {
+        return RetrofitClient.apiService.searchCoinList(
+            prefix = keyword,
+            symbols = keyword,
+            slugs = keyword,
+            ids = keyword,
+            offset = offset,
+            limit = limit
+        )
+    }
 }

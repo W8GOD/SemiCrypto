@@ -14,7 +14,9 @@ import io.reactivex.schedulers.Schedulers
 import java.io.InvalidObjectException
 
 @ExperimentalPagingApi
-class GetCoinsRxRemoteMediator : RxRemoteMediator<Int, CoinsEntity.CoinEntity>() {
+class SearchCoinsRxRemoteMediator(private val keyword: String) :
+    RxRemoteMediator<Int, CoinsEntity.CoinEntity>() {
+
     private val repository = GetCoinListRepository()
     private val coinKeysDao = AppDatabase.get()?.coinKeysDao()
     private val coinDao = AppDatabase.get()?.coinDao()
@@ -47,7 +49,8 @@ class GetCoinsRxRemoteMediator : RxRemoteMediator<Int, CoinsEntity.CoinEntity>()
                 if (offset == INVALID_PAGE) {
                     Single.just(MediatorResult.Success(endOfPaginationReached = true))
                 } else {
-                    repository.getCoinList(
+                    repository.searchCoinList(
+                        keyword = keyword,
                         offset = offset,
                         limit = DEFAULT_LIMIT_PAGE
                     )
