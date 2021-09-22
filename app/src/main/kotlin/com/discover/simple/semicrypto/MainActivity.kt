@@ -3,6 +3,7 @@ package com.discover.simple.semicrypto
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -33,16 +34,15 @@ import androidx.compose.ui.unit.sp
 import androidx.core.text.HtmlCompat
 import androidx.paging.ExperimentalPagingApi
 import coil.annotation.ExperimentalCoilApi
+import coil.compose.ImagePainter
 import coil.compose.LocalImageLoader
 import coil.compose.rememberImagePainter
 import coil.decode.SvgDecoder
 import com.discover.simple.core.model.Coin
 import com.discover.simple.semicrypto.ui.theme.*
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.delay
 import kotlin.time.ExperimentalTime
+
 
 @FlowPreview
 @ExperimentalPagingApi
@@ -57,41 +57,27 @@ class MainActivity : ComponentActivity() {
             SemiCryptoTheme {
                 Column {
                     val textState = remember { mutableStateOf(TextFieldValue("")) }
-                    var refreshing by remember { mutableStateOf(true) }
-                    LaunchedEffect(refreshing) {
-                        if (refreshing) {
-                            delay(2000)
-                            refreshing = false
-                        }
-                    }
                     SearchView(textState)
                     Divider(color = brightGray, thickness = 1.dp)
-                    SwipeRefresh(
-                        state = rememberSwipeRefreshState(refreshing),
-                        onRefresh = {
-                            refreshing = true
+                    CoinList(
+                        viewModel = coinViewModel,
+                        state = textState,
+                        onLoadCompleted = {
+                            // TODO Handle when load data is completed
                         },
-                    ) {
-                        CoinList(
-                            viewModel = coinViewModel,
-                            state = textState,
-                            onLoadCompleted = {
-                                // TODO Handle when load data is completed
-                            },
-                            onLoadFailed = {
-                                Toast.makeText(
-                                    this@MainActivity, it,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            },
-                            onItemClicked = {
-                                Toast.makeText(
-                                    this@MainActivity, it.name,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        )
-                    }
+                        onLoadFailed = {
+                            Toast.makeText(
+                                this@MainActivity, it,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        onItemClicked = {
+                            Toast.makeText(
+                                this@MainActivity, it.name,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    )
                 }
             }
         }
@@ -163,26 +149,17 @@ fun CoinWithContentItem(coin: Coin, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.Center,
     ) {
-        Row {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Surface(
                 modifier = Modifier
                     .size(100.dp)
                     .padding(16.dp),
                 shape = CircleShape
             ) {
-                val image = rememberImagePainter(
-                    data = coin.iconUrl,
-                    imageLoader = LocalImageLoader.current,
-                    builder = {
-                        crossfade(true)
-                        placeholder(0)
-                        decoder(SvgDecoder(LocalContext.current))
-                    }
-                )
                 Image(
-                    painter = image,
+                    painter = getImagePainter(coin.iconUrl),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds,
                 )
@@ -209,19 +186,17 @@ fun CoinWithContentItem(coin: Coin, onClick: () -> Unit) {
 
 @ExperimentalCoilApi
 @Composable
-fun CoinItem(coinData: Coin, onClick: () -> Unit) {
+fun CoinItem(coin: Coin, onClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalAlignment = Alignment.End
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.End,
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = coinData.name,
+                text = coin.name,
                 fontWeight = FontWeight.Bold,
                 style = TextStyle(fontSize = 16.sp),
                 color = textColorTitle,
@@ -235,17 +210,8 @@ fun CoinItem(coinData: Coin, onClick: () -> Unit) {
                     .padding(16.dp),
                 shape = CircleShape
             ) {
-                val image = rememberImagePainter(
-                    data = coinData.iconUrl,
-                    imageLoader = LocalImageLoader.current,
-                    builder = {
-                        crossfade(true)
-                        placeholder(R.mipmap.ic_coin_placeholder)
-                        decoder(SvgDecoder(LocalContext.current))
-                    }
-                )
                 Image(
-                    painter = image,
+                    painter = getImagePainter(coin.iconUrl),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds,
                 )
@@ -271,4 +237,32 @@ private fun DescriptionText(html: String) {
         maxLines = 3,
         modifier = Modifier.padding(top = 8.dp, end = 8.dp)
     )
+}
+
+@ExperimentalCoilApi
+@Composable
+fun getImagePainter(imageUrl: String): ImagePainter {
+    return if (getExtension(imageUrl).lowercase() == "svg") {
+        rememberImagePainter(
+            data = imageUrl,
+            imageLoader = LocalImageLoader.current,
+            builder = {
+                crossfade(true)
+                decoder(SvgDecoder(LocalContext.current))
+                placeholder(R.drawable.ic_placeholder)
+                error(R.drawable.ic_placeholder)
+            }
+        )
+    } else {
+        rememberImagePainter(imageUrl, builder = {
+            crossfade(true)
+            placeholder(R.drawable.ic_placeholder)
+            error(R.drawable.ic_placeholder)
+        })
+    }
+}
+
+fun getExtension(url: String): String {
+    val extension = MimeTypeMap.getFileExtensionFromUrl(url)
+    return if (extension.isEmpty()) "" else extension
 }
