@@ -3,7 +3,7 @@ package com.discover.simple.core.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-data class SearchCoinsEntity(val total: Int = 0, val coins: List<SearchCoinEntity>) {
+internal data class SearchCoinsEntity(val total: Int = 0, val coins: List<SearchCoinEntity>) {
 
     @Entity(tableName = "search_coins")
     data class SearchCoinEntity(

@@ -55,7 +55,7 @@ fun CoinInfoList(
     var refreshing by remember { mutableStateOf(true) }
     LaunchedEffect(refreshing) {
         if (refreshing) {
-            delay(1500)
+            delay(2000)
             refreshing = false
         }
     }
