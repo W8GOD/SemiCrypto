@@ -25,6 +25,8 @@ Android application that show the list of cryptocurrency coins and also add more
  12. Coil Image Loading
 ~~~
 
+## Example
+
 <p align="center" width="100%">
   <img width="30%" src="https://user-images.githubusercontent.com/24150580/134407571-716f56fa-ff33-4227-a34d-0afd303c965b.gif" />
 </p>
