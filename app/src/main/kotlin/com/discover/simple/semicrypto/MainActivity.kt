@@ -227,7 +227,7 @@ fun CoinItem(coinData: Coin, onClick: () -> Unit) {
                 color = textColorTitle,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
-                modifier = Modifier.padding(end = 8.dp)
+                modifier = Modifier.padding(start = 8.dp, end = 8.dp)
             )
             Surface(
                 modifier = Modifier
