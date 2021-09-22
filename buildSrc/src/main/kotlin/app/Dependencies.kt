@@ -48,6 +48,9 @@ object Dependencies {
     // Paging Compose
     const val pagingCompose = "androidx.paging:paging-compose:${DependenciesVersions.paging_compose_version}"
 
+    // Swipe Refresh
+    const val swiperefresh = "com.google.accompanist:accompanist-swiperefresh:${DependenciesVersions.swiperefresh_version}"
+
     const val junit = "junit:junit:${DependenciesVersions.junit_version}"
 
     const val junitExt = "androidx.test.ext:junit:${DependenciesVersions.junit_ext_version}"

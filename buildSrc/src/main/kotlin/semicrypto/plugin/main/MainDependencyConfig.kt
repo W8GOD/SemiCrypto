@@ -19,6 +19,7 @@ internal fun Project.configureMainDependency() = dependencies {
     add("implementation", Dependencies.rxKotlin)
     add("implementation", Dependencies.gson)
     add("implementation", Dependencies.pagingCompose)
+    add("implementation", Dependencies.swiperefresh)
     add("implementation", Dependencies.coil)
     add("implementation", Dependencies.coilCompose)
     add("implementation", Dependencies.coilSvg)

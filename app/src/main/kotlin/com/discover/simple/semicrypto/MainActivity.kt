@@ -16,10 +16,7 @@ import androidx.compose.material.TabRowDefaults.Divider
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,6 +37,8 @@ import coil.compose.rememberImagePainter
 import coil.decode.SvgDecoder
 import com.discover.simple.core.model.Coin
 import com.discover.simple.semicrypto.ui.theme.*
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.FlowPreview
 import kotlin.time.ExperimentalTime
 
@@ -56,13 +55,24 @@ class MainActivity : ComponentActivity() {
             SemiCryptoTheme {
                 Column {
                     val textState = remember { mutableStateOf(TextFieldValue("")) }
+                    var refreshing by remember { mutableStateOf(false) }
                     SearchView(textState)
                     Divider(color = brightGray, thickness = 1.dp)
-                    CoinList(
-                        context = this@MainActivity,
-                        viewModel = coinViewModel,
-                        state = textState
-                    )
+                    SwipeRefresh(
+                        state = rememberSwipeRefreshState(refreshing),
+                        onRefresh = {
+                            refreshing = true
+                        },
+                    ) {
+                        CoinList(
+                            context = this@MainActivity,
+                            viewModel = coinViewModel,
+                            state = textState,
+                            onLoaded = {
+                                refreshing = false
+                            }
+                        )
+                    }
                 }
             }
         }

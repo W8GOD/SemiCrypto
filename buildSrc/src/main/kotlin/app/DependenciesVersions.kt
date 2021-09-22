@@ -17,6 +17,7 @@ object DependenciesVersions {
     const val gson_version = "2.8.6"
     const val lifecycle_version = "2.2.0"
     const val paging_compose_version = "1.0.0-alpha12"
+    const val swiperefresh_version = "0.18.0"
     const val retrofit_version = "2.9.0"
     const val coil_version = "0.15.0"
     const val coil_compose_version = "1.3.2"

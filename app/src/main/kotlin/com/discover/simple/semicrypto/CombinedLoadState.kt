@@ -23,18 +23,22 @@ import kotlin.time.ExperimentalTime
 @ExperimentalPagingApi
 @ExperimentalCoilApi
 @Composable
-fun CoinList(context: Context, viewModel: CoinViewModel, state: MutableState<TextFieldValue>) {
+fun CoinList(
+    context: Context,
+    viewModel: CoinViewModel,
+    state: MutableState<TextFieldValue>, onLoaded: (Boolean) -> Unit
+) {
     val searchedText = state.value.text
     if (searchedText.isEmpty()) {
-        CoinInfoList(coins = viewModel.getCoins, context)
+        CoinInfoList(coins = viewModel.getCoins(), context, onLoaded)
     } else {
-        CoinInfoList(coins = viewModel.searchCoins(searchedText), context)
+        CoinInfoList(coins = viewModel.searchCoins(searchedText), context, onLoaded)
     }
 }
 
 @ExperimentalCoilApi
 @Composable
-fun CoinInfoList(coins: Flow<PagingData<Coin>>, context: Context) {
+fun CoinInfoList(coins: Flow<PagingData<Coin>>, context: Context, onLoaded: (Boolean) -> Unit) {
     val coinItems: LazyPagingItems<Coin> = coins.collectAsLazyPagingItems()
     LazyColumn {
         itemsIndexed(coinItems) { index, item ->
@@ -55,13 +59,18 @@ fun CoinInfoList(coins: Flow<PagingData<Coin>>, context: Context) {
         coinItems.apply {
             when {
                 loadState.refresh is LoadState.Loading -> {
-                    //You can add modifier to manage load state when first time response page is loading
+                    onLoaded.invoke(false)
+                }
+                loadState.refresh is LoadState.Error -> {
+                    val message = (loadState.refresh as? LoadState.Error)?.error?.message
+                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                 }
                 loadState.append is LoadState.Loading -> {
-                    //You can add modifier to manage load state when next response page is loading
+                    onLoaded.invoke(false)
                 }
                 loadState.append is LoadState.Error -> {
-                    //You can use modifier to show error message
+                    val message = (loadState.append as? LoadState.Error)?.error?.message
+                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                 }
             }
         }

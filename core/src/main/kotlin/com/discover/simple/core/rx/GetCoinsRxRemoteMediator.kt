@@ -56,7 +56,9 @@ internal class GetCoinsRxRemoteMediator : RxRemoteMediator<Int, CoinsEntity.Coin
                         .map<MediatorResult> {
                             MediatorResult.Success(endOfPaginationReached = offset > it.total)
                         }
-                        .onErrorReturn { MediatorResult.Error(it) }
+                        .onErrorReturn {
+                            MediatorResult.Error(it)
+                        }
                 }
 
             }
