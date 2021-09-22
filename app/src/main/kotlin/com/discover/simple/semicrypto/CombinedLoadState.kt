@@ -13,10 +13,12 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import coil.annotation.ExperimentalCoilApi
-import com.discover.simple.core.entity.CoinsEntity
+import com.discover.simple.core.model.Coin
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlin.time.ExperimentalTime
 
+@FlowPreview
 @ExperimentalTime
 @ExperimentalPagingApi
 @ExperimentalCoilApi
@@ -32,8 +34,8 @@ fun CoinList(context: Context, viewModel: CoinViewModel, state: MutableState<Tex
 
 @ExperimentalCoilApi
 @Composable
-fun CoinInfoList(coins: Flow<PagingData<CoinsEntity.CoinEntity>>, context: Context) {
-    val coinItems: LazyPagingItems<CoinsEntity.CoinEntity> = coins.collectAsLazyPagingItems()
+fun CoinInfoList(coins: Flow<PagingData<Coin>>, context: Context) {
+    val coinItems: LazyPagingItems<Coin> = coins.collectAsLazyPagingItems()
     LazyColumn {
         itemsIndexed(coinItems) { index, item ->
             if (((index + 1) % 5) == 0) {
@@ -44,7 +46,7 @@ fun CoinInfoList(coins: Flow<PagingData<CoinsEntity.CoinEntity>>, context: Conte
                 }
             } else {
                 item?.let {
-                    CoinWithContentItem(coinData = it, onClick = {
+                    CoinWithContentItem(coin = it, onClick = {
                         Toast.makeText(context, it.id.toString(), Toast.LENGTH_SHORT).show()
                     })
                 }

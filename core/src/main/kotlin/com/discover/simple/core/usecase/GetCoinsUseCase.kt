@@ -1,18 +1,18 @@
 package com.discover.simple.core.usecase
 
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
+import androidx.paging.*
 import com.discover.simple.core.constant.Constant.DEFAULT_LIMIT_PAGE
 import com.discover.simple.core.database.AppDatabase
-import com.discover.simple.core.entity.CoinsEntity
+import com.discover.simple.core.model.Coin
+import com.discover.simple.core.model.CoinMapper
 import com.discover.simple.core.rx.GetCoinsRxRemoteMediator
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import java.util.concurrent.Executors
 
 class GetCoinsUseCase {
     @ExperimentalPagingApi
-    fun execute(): Flow<PagingData<CoinsEntity.CoinEntity>> {
+    fun execute(): Flow<PagingData<Coin>> {
         val pager = Pager(
             config = PagingConfig(
                 pageSize = DEFAULT_LIMIT_PAGE,
@@ -27,5 +27,10 @@ class GetCoinsUseCase {
             coinDao!!.getAll()
         }
         return pager.flow
+            .map { pagingData ->
+                pagingData.map(Executors.newSingleThreadExecutor()) {
+                    CoinMapper().transform(it)
+                }
+            }
     }
 }

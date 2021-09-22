@@ -1,10 +1,10 @@
 package com.discover.simple.core.model
 
-import com.discover.simple.core.entity.CoinsEntity
+import com.discover.simple.core.entity.SearchCoinsEntity
 
-internal class CoinMapper {
+internal class SearchCoinMapper {
 
-    fun transform(coins: CoinsEntity.CoinEntity): Coin {
+    fun transform(coins: SearchCoinsEntity.SearchCoinEntity): Coin {
         return with(coins) {
             Coin(
                 id = id,

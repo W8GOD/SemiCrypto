@@ -3,10 +3,10 @@ package com.discover.simple.core.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-internal data class CoinsEntity(val total: Int = 0, val coins: List<CoinEntity>) {
+data class SearchCoinsEntity(val total: Int = 0, val coins: List<SearchCoinEntity>) {
 
-    @Entity(tableName = "coins")
-    data class CoinEntity(
+    @Entity(tableName = "search_coins")
+    data class SearchCoinEntity(
         @PrimaryKey val id: Int,
         val uuid: String,
         val name: String,
@@ -17,8 +17,8 @@ internal data class CoinsEntity(val total: Int = 0, val coins: List<CoinEntity>)
         val rank: Int?
     )
 
-    @Entity(tableName = "coin_keys")
-    data class CoinKeys(
+    @Entity(tableName = "search_coin_keys")
+    data class SearchCoinKeys(
         @PrimaryKey val coinId: Int,
         val offsetKey: Int?,
         val pageKey: Int?,

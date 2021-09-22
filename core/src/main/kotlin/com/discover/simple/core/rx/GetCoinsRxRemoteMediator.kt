@@ -7,14 +7,14 @@ import androidx.paging.rxjava2.RxRemoteMediator
 import com.discover.simple.core.constant.Constant.DEFAULT_LIMIT_PAGE
 import com.discover.simple.core.database.AppDatabase
 import com.discover.simple.core.entity.CoinsEntity
-import com.discover.simple.core.model.CoinMapper
+import com.discover.simple.core.model.CoinsEntityMapper
 import com.discover.simple.core.repository.GetCoinListRepository
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import java.io.InvalidObjectException
 
 @ExperimentalPagingApi
-class GetCoinsRxRemoteMediator : RxRemoteMediator<Int, CoinsEntity.CoinEntity>() {
+internal class GetCoinsRxRemoteMediator : RxRemoteMediator<Int, CoinsEntity.CoinEntity>() {
     private val repository = GetCoinListRepository()
     private val coinKeysDao = AppDatabase.get()?.coinKeysDao()
     private val coinDao = AppDatabase.get()?.coinDao()
@@ -51,7 +51,7 @@ class GetCoinsRxRemoteMediator : RxRemoteMediator<Int, CoinsEntity.CoinEntity>()
                         offset = offset,
                         limit = DEFAULT_LIMIT_PAGE
                     )
-                        .map { CoinMapper().transform(it) }
+                        .map { CoinsEntityMapper().transform(it) }
                         .map { insertToDb(offset, loadType, it) }
                         .map<MediatorResult> {
                             MediatorResult.Success(endOfPaginationReached = offset > it.total)

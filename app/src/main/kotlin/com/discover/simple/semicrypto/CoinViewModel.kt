@@ -3,7 +3,7 @@ package com.discover.simple.semicrypto
 import androidx.lifecycle.ViewModel
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
-import com.discover.simple.core.entity.CoinsEntity
+import com.discover.simple.core.model.Coin
 import com.discover.simple.core.usecase.GetCoinsUseCase
 import com.discover.simple.core.usecase.SearchCoinsUseCase
 import kotlinx.coroutines.FlowPreview
@@ -14,11 +14,11 @@ import kotlin.time.ExperimentalTime
 
 @ExperimentalPagingApi
 class CoinViewModel : ViewModel() {
-    val getCoins: Flow<PagingData<CoinsEntity.CoinEntity>> = GetCoinsUseCase().execute()
+    val getCoins: Flow<PagingData<Coin>> = GetCoinsUseCase().execute()
 
     @ExperimentalTime
     @FlowPreview
-    fun searchCoins(keyword: String): Flow<PagingData<CoinsEntity.CoinEntity>> {
+    fun searchCoins(keyword: String): Flow<PagingData<Coin>> {
         return SearchCoinsUseCase().execute(keyword).debounce(Duration.milliseconds(300))
     }
 }

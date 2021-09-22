@@ -38,10 +38,12 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.LocalImageLoader
 import coil.compose.rememberImagePainter
 import coil.decode.SvgDecoder
-import com.discover.simple.core.entity.CoinsEntity
+import com.discover.simple.core.model.Coin
 import com.discover.simple.semicrypto.ui.theme.*
+import kotlinx.coroutines.FlowPreview
 import kotlin.time.ExperimentalTime
 
+@FlowPreview
 @ExperimentalPagingApi
 @ExperimentalCoilApi
 @ExperimentalTime
@@ -127,7 +129,7 @@ fun SearchView(state: MutableState<TextFieldValue>) {
 
 @ExperimentalCoilApi
 @Composable
-fun CoinWithContentItem(coinData: CoinsEntity.CoinEntity, onClick: () -> Unit) {
+fun CoinWithContentItem(coin: Coin, onClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -142,7 +144,7 @@ fun CoinWithContentItem(coinData: CoinsEntity.CoinEntity, onClick: () -> Unit) {
                 shape = CircleShape
             ) {
                 val image = rememberImagePainter(
-                    data = coinData.iconUrl,
+                    data = coin.iconUrl,
                     imageLoader = LocalImageLoader.current,
                     builder = {
                         crossfade(true)
@@ -161,7 +163,7 @@ fun CoinWithContentItem(coinData: CoinsEntity.CoinEntity, onClick: () -> Unit) {
                     .align(Alignment.CenterVertically)
             ) {
                 Text(
-                    text = coinData.name,
+                    text = coin.name,
                     fontWeight = FontWeight.Bold,
                     style = TextStyle(fontSize = 16.sp),
                     color = textColorTitle,
@@ -169,7 +171,7 @@ fun CoinWithContentItem(coinData: CoinsEntity.CoinEntity, onClick: () -> Unit) {
                     maxLines = 1,
                     modifier = Modifier.padding(end = 8.dp)
                 )
-                DescriptionText(coinData.description)
+                DescriptionText(coin.description)
             }
         }
         Divider(color = brightGray, thickness = 1.dp)
@@ -178,7 +180,7 @@ fun CoinWithContentItem(coinData: CoinsEntity.CoinEntity, onClick: () -> Unit) {
 
 @ExperimentalCoilApi
 @Composable
-fun CoinItem(coinData: CoinsEntity.CoinEntity, onClick: () -> Unit) {
+fun CoinItem(coinData: Coin, onClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()

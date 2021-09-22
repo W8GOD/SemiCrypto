@@ -6,24 +6,24 @@ import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxRemoteMediator
 import com.discover.simple.core.constant.Constant.DEFAULT_LIMIT_PAGE
 import com.discover.simple.core.database.AppDatabase
-import com.discover.simple.core.entity.CoinsEntity
-import com.discover.simple.core.model.CoinMapper
+import com.discover.simple.core.entity.SearchCoinsEntity
+import com.discover.simple.core.model.SearchCoinsEntityMapper
 import com.discover.simple.core.repository.GetCoinListRepository
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import java.io.InvalidObjectException
 
 @ExperimentalPagingApi
-class SearchCoinsRxRemoteMediator(private val keyword: String) :
-    RxRemoteMediator<Int, CoinsEntity.CoinEntity>() {
+internal class SearchCoinsRxRemoteMediator(private val keyword: String) :
+    RxRemoteMediator<Int, SearchCoinsEntity.SearchCoinEntity>() {
 
     private val repository = GetCoinListRepository()
-    private val coinKeysDao = AppDatabase.get()?.coinKeysDao()
-    private val coinDao = AppDatabase.get()?.coinDao()
+    private val searchCoinKeysDao = AppDatabase.get()?.searchCoinKeysDao()
+    private val searchCoinDao = AppDatabase.get()?.searchCoinDao()
 
     override fun loadSingle(
         loadType: LoadType,
-        state: PagingState<Int, CoinsEntity.CoinEntity>
+        state: PagingState<Int, SearchCoinsEntity.SearchCoinEntity>
     ): Single<MediatorResult> {
         return Single.just(loadType)
             .subscribeOn(Schedulers.io())
@@ -54,7 +54,7 @@ class SearchCoinsRxRemoteMediator(private val keyword: String) :
                         offset = offset,
                         limit = DEFAULT_LIMIT_PAGE
                     )
-                        .map { CoinMapper().transform(it) }
+                        .map { SearchCoinsEntityMapper().transform(it) }
                         .map { insertToDb(offset, loadType, it) }
                         .map<MediatorResult> {
                             MediatorResult.Success(endOfPaginationReached = offset > it.total)
@@ -68,17 +68,21 @@ class SearchCoinsRxRemoteMediator(private val keyword: String) :
             }
     }
 
-    private fun insertToDb(offset: Int, loadType: LoadType, data: CoinsEntity): CoinsEntity {
+    private fun insertToDb(
+        offset: Int,
+        loadType: LoadType,
+        data: SearchCoinsEntity
+    ): SearchCoinsEntity {
         if (loadType == LoadType.REFRESH) {
-            coinDao?.clearCoins()
-            coinKeysDao?.clearKeys()
+            searchCoinDao?.clearCoins()
+            searchCoinKeysDao?.clearKeys()
         }
         val page = (offset / DEFAULT_LIMIT_PAGE) + 1
         val offsetKey = (page - 1) * DEFAULT_LIMIT_PAGE
         val prevKey = if (page == 1) null else (page - 1) * DEFAULT_LIMIT_PAGE
         val nextKey = if (offset > data.total) null else page * DEFAULT_LIMIT_PAGE
         val keys = data.coins.map { coinItem ->
-            CoinsEntity.CoinKeys(
+            SearchCoinsEntity.SearchCoinKeys(
                 coinId = coinItem.id,
                 offsetKey = offsetKey,
                 pageKey = page,
@@ -87,22 +91,22 @@ class SearchCoinsRxRemoteMediator(private val keyword: String) :
                 rank = coinItem.rank
             )
         }
-        coinKeysDao?.insertAll(keys)
-        coinDao?.insertAll(data.coins)
+        searchCoinKeysDao?.insertAll(keys)
+        searchCoinDao?.insertAll(data.coins)
         return data
     }
 
-    private fun getKeyForLastItem(): CoinsEntity.CoinKeys? {
-        return coinKeysDao?.getLastKeys()
+    private fun getKeyForLastItem(): SearchCoinsEntity.SearchCoinKeys? {
+        return searchCoinKeysDao?.getLastKeys()
     }
 
-    private fun getKeyForFirstItem(): CoinsEntity.CoinKeys? {
-        return coinKeysDao?.getFirstKeys()
+    private fun getKeyForFirstItem(): SearchCoinsEntity.SearchCoinKeys? {
+        return searchCoinKeysDao?.getFirstKeys()
     }
 
-    private fun getKeyClosestToCurrentPosition(state: PagingState<Int, CoinsEntity.CoinEntity>): CoinsEntity.CoinKeys? {
+    private fun getKeyClosestToCurrentPosition(state: PagingState<Int, SearchCoinsEntity.SearchCoinEntity>): SearchCoinsEntity.SearchCoinKeys? {
         return state.anchorPosition?.let { position ->
-            coinKeysDao?.getAllKeys()?.get(position)
+            searchCoinKeysDao?.getAllKeys()?.get(position)
         }
     }
 
