@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 
 const val DEFAULT_LIMIT_PAGE = 10
 
-class GetCoinsUserCase {
+class GetCoinsUseCase {
 
     @ExperimentalPagingApi
     fun execute(): Flow<PagingData<CoinsEntity.CoinEntity>> {
