@@ -12,8 +12,8 @@ internal interface SearchCoinDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(coins: List<SearchCoinsEntity.SearchCoinEntity>)
 
-    @Query("SELECT * FROM search_coins WHERE id = :keyword OR name like :keyword || '%' OR slug = :keyword OR symbol = :keyword ORDER BY rank ASC")
-    fun search(keyword: String): PagingSource<Int, SearchCoinsEntity.SearchCoinEntity>
+    @Query("SELECT * FROM search_coins WHERE name like :name || '%' ORDER BY rank ASC")
+    fun search(name: String): PagingSource<Int, SearchCoinsEntity.SearchCoinEntity>
 
     @Query("DELETE FROM search_coins")
     fun clearCoins()

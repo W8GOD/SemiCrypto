@@ -18,7 +18,7 @@ class CoinViewModel : ViewModel() {
 
     @ExperimentalTime
     @FlowPreview
-    fun searchCoins(keyword: String): Flow<PagingData<Coin>> {
-        return SearchCoinsUseCase().execute(keyword).debounce(Duration.milliseconds(300))
+    fun searchCoins(prefix: String): Flow<PagingData<Coin>> {
+        return SearchCoinsUseCase().execute(prefix).debounce(Duration.milliseconds(300))
     }
 }

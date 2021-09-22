@@ -12,7 +12,7 @@ import java.util.concurrent.Executors
 
 class SearchCoinsUseCase {
     @ExperimentalPagingApi
-    fun execute(keyword: String): Flow<PagingData<Coin>> {
+    fun execute(prefix: String): Flow<PagingData<Coin>> {
         val pager = Pager(
             config = PagingConfig(
                 pageSize = DEFAULT_LIMIT_PAGE,
@@ -21,10 +21,10 @@ class SearchCoinsUseCase {
                 initialLoadSize = DEFAULT_LIMIT_PAGE
             ),
             initialKey = null,
-            remoteMediator = SearchCoinsRxRemoteMediator(keyword = keyword)
+            remoteMediator = SearchCoinsRxRemoteMediator(prefix = prefix)
         ) {
             val coinDao = AppDatabase.get()?.searchCoinDao()
-            coinDao!!.search(keyword)
+            coinDao!!.search(prefix)
         }
         return pager.flow
             .map { pagingData ->

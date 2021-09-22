@@ -15,9 +15,6 @@ internal interface RetrofitService {
     @GET("coins")
     fun searchCoinList(
         @Query("prefix") prefix: String,
-        @Query("symbols") symbols: String,
-        @Query("slugs") slugs: String,
-        @Query("ids") ids: String,
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
     ): Single<CoinListResponse>

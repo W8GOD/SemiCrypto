@@ -11,15 +11,12 @@ class GetCoinListRepository {
     }
 
     internal fun searchCoinList(
-        keyword: String,
+        prefix: String,
         offset: Int,
         limit: Int
     ): Single<CoinListResponse> {
         return RetrofitClient.apiService.searchCoinList(
-            prefix = keyword,
-            symbols = keyword,
-            slugs = keyword,
-            ids = keyword,
+            prefix = prefix,
             offset = offset,
             limit = limit
         )
