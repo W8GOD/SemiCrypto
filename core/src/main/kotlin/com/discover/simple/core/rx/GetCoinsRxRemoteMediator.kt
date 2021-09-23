@@ -5,7 +5,8 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxRemoteMediator
 import com.discover.simple.core.constant.Constant.DEFAULT_LIMIT_PAGE
-import com.discover.simple.core.database.AppDatabase
+import com.discover.simple.core.dao.CoinDao
+import com.discover.simple.core.dao.CoinKeysDao
 import com.discover.simple.core.entity.CoinsEntity
 import com.discover.simple.core.model.CoinsEntityMapper
 import com.discover.simple.core.repository.GetCoinListRepository
@@ -14,10 +15,11 @@ import io.reactivex.schedulers.Schedulers
 import java.io.InvalidObjectException
 
 @ExperimentalPagingApi
-internal class GetCoinsRxRemoteMediator : RxRemoteMediator<Int, CoinsEntity.CoinEntity>() {
-    private val repository = GetCoinListRepository()
-    private val coinKeysDao = AppDatabase.get()?.coinKeysDao()
-    private val coinDao = AppDatabase.get()?.coinDao()
+internal class GetCoinsRxRemoteMediator(
+    private val repository: GetCoinListRepository,
+    private val coinKeysDao: CoinKeysDao?,
+    private val coinDao: CoinDao?,
+) : RxRemoteMediator<Int, CoinsEntity.CoinEntity>() {
 
     override fun loadSingle(
         loadType: LoadType,
