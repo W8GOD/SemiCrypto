@@ -28,5 +28,5 @@ Android application that show the list of cryptocurrency coins and also add more
 ## Run Sample Application
 
 <p align="center" width="100%">
-  <img width="30%" src="https://user-images.githubusercontent.com/24150580/134407571-716f56fa-ff33-4227-a34d-0afd303c965b.gif" />
+  <img width="30%" src="https://user-images.githubusercontent.com/24150580/134471186-1a9c87cb-b977-4e70-8336-679324f8893c.gif" />
 </p>
