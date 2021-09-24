@@ -23,6 +23,7 @@ Android application that show the list of cryptocurrency coins and also add more
  10. RXJava, RXKotlin
  11. Flow
  12. Coil Image Loading
+ 13. Gradle Kotlin DSL
 ~~~
 
 ## Run Sample Application
