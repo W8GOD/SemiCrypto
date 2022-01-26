@@ -46,6 +46,7 @@ object Dependencies {
     const val room = "androidx.room:room-runtime:${DependenciesVersions.room_version}"
     const val roomKtx = "androidx.room:room-ktx:${DependenciesVersions.room_version}"
     const val roomCompiler = "androidx.room:room-compiler:${DependenciesVersions.room_version}"
+    const val roomPaging = "androidx.room:room-paging:${DependenciesVersions.room_version}"
 
     // Compose
     const val composeUI = "androidx.compose.ui:ui:${DependenciesVersions.compose_version}"
@@ -64,7 +65,7 @@ object Dependencies {
 
     // Swipe Refresh
     const val swiperefresh =
-        "com.google.accompanist:accompanist-swiperefresh:${DependenciesVersions.swiperefresh_version}"
+        "com.google.accompanist:accompanist-swiperefresh:${DependenciesVersions.swipe_refresh_version}"
 
     const val junit = "junit:junit:${DependenciesVersions.junit_version}"
 

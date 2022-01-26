@@ -50,6 +50,7 @@ androidExtensions {
 dependencies {
     implementation(Dependencies.room)
     implementation(Dependencies.roomKtx)
+    implementation(Dependencies.roomPaging)
     implementation(Dependencies.lifecycleExtensions)
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.retrofit)
